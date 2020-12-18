@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "374750037537",
+    "project_id": "tamanagmentsystem",
+    "storage_bucket": "tamanagmentsystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374750037537:android:881534f5c939254000c560",
+        "android_client_info": {
+          "package_name": "com.example.tamanagmentsystem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "374750037537-v19lvkrqgvleqc3tl2gmh6gtfr78lbhs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7SamvPgiyk720WP8ak86hFj7dv7IKhOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "374750037537-v19lvkrqgvleqc3tl2gmh6gtfr78lbhs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
