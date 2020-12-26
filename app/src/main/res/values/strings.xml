@@ -13,4 +13,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_about">About App</string>
+
+    <string-array name="department_array">
+        <item>Engineering</item>
+        <item>Computer Science</item>
+        <item>Administration</item>
+    </string-array>
+    <string-array name="year_array">
+        <item>First Year</item>
+        <item>Second Year</item>
+        <item>Third Year</item>
+        <item>Froth Year</item>
+        <item>Fifth Year</item>
+    </string-array>
 </resources>

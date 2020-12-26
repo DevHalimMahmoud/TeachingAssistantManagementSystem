@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
         adminLayoutManager = new LinearLayoutManager(root.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         taLayoutManager = new LinearLayoutManager(root.getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         studentLayoutManager = new LinearLayoutManager(root.getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-        Log.d("ffffff", "init: 7a");
+
         admin_recycler.setLayoutManager(adminLayoutManager);
         ta_recycler.setLayoutManager(taLayoutManager);
         student_recycler.setLayoutManager(studentLayoutManager);

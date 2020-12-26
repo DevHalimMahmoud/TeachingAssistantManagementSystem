@@ -49,6 +49,7 @@ public class Login extends AppCompatActivity {
                                     for (QueryDocumentSnapshot document : task.getResult()) {
 
                                         if (document.get("email").toString().equals(email.getText().toString()) && document.get("password").toString().equals(password.getText().toString())) {
+
                                             final Intent intent;
                                             Context context = getApplicationContext();
                                             intent = new Intent(context, MainActivity.class);
