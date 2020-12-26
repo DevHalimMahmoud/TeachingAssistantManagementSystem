@@ -2,16 +2,14 @@ package com.example.tamanagmentsystem.ui.about;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.tamanagmentsystem.R;
 
@@ -38,10 +36,10 @@ public class AboutFragment extends Fragment {
 
     private void OurTeamRecyclerView(View root) {
         final ArrayList<OurTeam> ourTeamArrayList = new ArrayList<>();
-        ourTeamArrayList.add(new OurTeam( "AbdelHalim Mahmoud", "Android Devaloper", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BU%2B%2B6svsCTEe1oxfOrIkeHw%3D%3D", R.drawable.abdel_halim, R.drawable.linked));
-        ourTeamArrayList.add(new OurTeam( "Ahmed Sedky", "Android Devaloper", "2018030021", "https://www.linkedin.com/in/abdelhalim-mahmoud/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BU%2B%2B6svsCTEe1oxfOrIkeHw%3D%3D", R.drawable.logo, R.drawable.linked));
-        ourTeamArrayList.add(new OurTeam( "AbdelRhman Saeed", "Android Devaloper", "2018030211", "https://www.linkedin.com/in/abdelhalim-mahmoud/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BU%2B%2B6svsCTEe1oxfOrIkeHw%3D%3D", R.drawable.logo, R.drawable.linked));
-        ourTeamArrayList.add(new OurTeam( "Tarik", "Android Devaloper", "2018030064", "https://www.linkedin.com/in/abdelhalim-mahmoud/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BU%2B%2B6svsCTEe1oxfOrIkeHw%3D%3D", R.drawable.logo, R.drawable.linked));
+        ourTeamArrayList.add(new OurTeam( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/", R.drawable.abdel_halim, R.drawable.linked));
+        ourTeamArrayList.add(new OurTeam( "Ahmed Sedky", "Android Team", "2018030021", "https://www.facebook.com/ahmed.sedky.9", R.drawable.sedky, R.drawable.facebook));
+        ourTeamArrayList.add(new OurTeam( "AbdelRhman Saeed", "Android Team", "2018030211", "http://www.linkedin.com/in/abdelrahman-saeed-bab9841a2", R.drawable.saeed, R.drawable.linked));
+        ourTeamArrayList.add(new OurTeam( "Tarik Atef", "Android Team", "2018030064", "https://www.facebook.com/mazika.is.here", R.drawable.tarek, R.drawable.facebook));
 
 
         Context context = root.getContext();

@@ -30,7 +30,7 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         TextInputEditText email = findViewById(R.id.email);
-        TextInputEditText password = findViewById(R.id.password);
+        TextInputEditText password = findViewById(R.id.gpa);
         CheckBox admin = findViewById(R.id.checkBox);
 
         Button login = findViewById(R.id.login);
@@ -38,6 +38,7 @@ public class Login extends AppCompatActivity {
 
 
             if (admin.isChecked()) {
+                MainActivity.type=true;
                 db.collection("Admin")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -63,6 +64,7 @@ public class Login extends AppCompatActivity {
                         });
 
             } else {
+                MainActivity.type=false;
                 db.collection("ta")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -91,7 +93,7 @@ public class Login extends AppCompatActivity {
         });
     }
 
-
+/*
     public boolean checkLogin(TextInputEditText email, TextInputEditText password, CheckBox admin) {
 
 
@@ -143,5 +145,7 @@ public class Login extends AppCompatActivity {
         Log.d("a", String.valueOf(state));
         return state;
     }
+    */
+
 }
 
