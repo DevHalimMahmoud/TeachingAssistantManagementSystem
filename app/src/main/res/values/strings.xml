@@ -16,8 +16,8 @@
 
     <string-array name="department_array">
         <item>Engineering</item>
-        <item>Computer Science</item>
         <item>Administration</item>
+        <item>Computer Science</item>
     </string-array>
     <string-array name="year_array">
         <item>First Year</item>

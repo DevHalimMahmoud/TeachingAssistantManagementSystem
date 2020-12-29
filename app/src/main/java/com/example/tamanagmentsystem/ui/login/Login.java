@@ -55,6 +55,8 @@ public class Login extends AppCompatActivity {
                                             intent = new Intent(context, MainActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             context.startActivity(intent);
+                                            MainActivity.document=document;
+                                            break;
                                         }
                                     }
                                 } else {
@@ -79,6 +81,8 @@ public class Login extends AppCompatActivity {
                                             intent = new Intent(context, MainActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                             context.startActivity(intent);
+                                            MainActivity.document=document;
+                                            break;
                                         }
                                     }
                                 } else {

@@ -24,6 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.view.View.GONE;
 
 public class HomeFragment extends Fragment {
@@ -31,7 +34,7 @@ public class HomeFragment extends Fragment {
 
     ProgressBar progressBar;
     private FirebaseFirestore db;
-
+    RecyclerView shift_recyclerView;
     RecyclerView admin_recycler;
     private FirestoreRecyclerAdapter admin_adapter;
     RecyclerView ta_recycler;
@@ -45,10 +48,11 @@ public class HomeFragment extends Fragment {
     @SuppressLint("WrongConstant")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         TextView admin_t = root.findViewById(R.id.admins);
         TextView ta_t = root.findViewById(R.id.ta);
+        TextView shift_t = root.findViewById(R.id.shift);
+        shift_recyclerView = (RecyclerView) root.findViewById(R.id.shift_recycler);
         admin_recycler = root.findViewById(R.id.admin_recycler);
         ta_recycler = root.findViewById(R.id.ta_recycler);
         student_recycler = root.findViewById(R.id.student_recycler);
@@ -58,11 +62,16 @@ public class HomeFragment extends Fragment {
             admin_t.setVisibility(GONE);
             ta_t.setVisibility(GONE);
             ta_recycler.setVisibility(GONE);
+        } else {
+            shift_t.setVisibility(GONE);
+            shift_recyclerView.setVisibility(GONE);
+
         }
         init(root.getContext());
         getAdminList(root.getContext());
         getTAList(root.getContext());
         getStudentList(root.getContext());
+        shifts(root);
         return root;
     }
 
@@ -242,6 +251,41 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private void shifts(View root) {
+        final ArrayList<ShiftItem> day = new ArrayList<>();
+        if(!MainActivity.type) {
+            List<Boolean> days = (List<Boolean>) MainActivity.document.get("shift");
+            if (days.get(0)) {
+                day.add(new ShiftItem("Saturday"));
+            }
+            if (days.get(1)) {
+                day.add(new ShiftItem("Sunday"));
+            }
+            if (days.get(2)) {
+                day.add(new ShiftItem("Monday"));
+            }
+            if (days.get(3)) {
+                day.add(new ShiftItem("Tuesday"));
+            }
+            if (days.get(4)) {
+                day.add(new ShiftItem("Wednesday"));
+            }
+            if (days.get(5)) {
+                day.add(new ShiftItem("Thursday"));
+            }
+        }
+
+        Context context = root.getContext();
+
+
+        shift_recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+
+        final ShiftAdapter ourTeamRecyclerAdapter = new ShiftAdapter(R.layout.shift_item, day);
+
+        shift_recyclerView.setAdapter(ourTeamRecyclerAdapter);
+
+
+    }
 
     @Override
     public void onStart() {

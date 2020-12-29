@@ -15,41 +15,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tamanagmentsystem.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CategoriesFragment extends Fragment {
-RecyclerView recyclerView;
+    RecyclerView recyclerView;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    int yearVal;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_categories, container, false);
         final ArrayList<Student> arrayList = new ArrayList<>();
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
-        arrayList.add(new Student( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/"));
+
         recyclerView = (RecyclerView) root.findViewById(R.id.cat_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));
         final RecyclerAdapter ourTeamRecyclerAdapter = new RecyclerAdapter(R.layout.student_item2, arrayList);
         recyclerView.setAdapter(ourTeamRecyclerAdapter);
         Spinner department = root.findViewById(R.id.department);
         Spinner year = root.findViewById(R.id.year);
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(root.getContext(),
                 R.array.department_array, android.R.layout.simple_spinner_item);
 
@@ -57,7 +49,34 @@ RecyclerView recyclerView;
         department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("aaaaa", "onItemSelected: ");
+
+                db.collection("student")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                yearVal = Calendar.getInstance().get(Calendar.YEAR) - (year.getSelectedItemPosition());
+                                arrayList.clear();
+                                ourTeamRecyclerAdapter.notifyDataSetChanged();
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("Bad", String.valueOf(document.get("ID").toString().subSequence(0, 4)), task.getException());
+
+                                        if (String.valueOf(position + 1).equals(String.valueOf(document.get("ID").toString().charAt(5))) && document.get("ID").toString().subSequence(0, 4).equals(String.valueOf(yearVal))) {
+                                            Log.d("ffff", String.valueOf(document.get("ID")), task.getException());
+
+                                            arrayList.add(new Student(document.get("name").toString(), document.get("ID").toString(), document.get("gpa").toString(), document.get("phone").toString()));
+                                            ourTeamRecyclerAdapter.notifyDataSetChanged();
+
+
+                                        }
+                                    }
+                                } else {
+                                    Log.d("Bad", "Error getting documents: ", task.getException());
+                                }
+
+                            }
+                        });
             }
 
             @Override
@@ -75,7 +94,32 @@ RecyclerView recyclerView;
         year.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("aaaaa", "onItemSelected: ");
+                db.collection("student")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                yearVal = Calendar.getInstance().get(Calendar.YEAR) - position;
+                                arrayList.clear();
+                                ourTeamRecyclerAdapter.notifyDataSetChanged();
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                        if (String.valueOf(department.getSelectedItemPosition() + 1).equals(String.valueOf(document.get("ID").toString().charAt(5))) && document.get("ID").toString().subSequence(0, 4).equals(String.valueOf(yearVal))) {
+                                            Log.d("ffff", String.valueOf(document.get("ID")), task.getException());
+
+
+                                            arrayList.add(new Student(document.get("name").toString(), document.get("ID").toString(), document.get("gpa").toString(), document.get("phone").toString()));
+                                            ourTeamRecyclerAdapter.notifyDataSetChanged();
+
+                                        }
+                                    }
+                                } else {
+                                    Log.d("Bad", "Error getting documents: ", task.getException());
+                                }
+
+                            }
+                        });
             }
 
             @Override
@@ -87,27 +131,5 @@ RecyclerView recyclerView;
         return root;
     }
 
-    /*private void OurTeamRecyclerView(View root) {
-
-        ourTeamArrayList.add(new OurTeam( "AbdelHalim Mahmoud", "Android Team", "2018030258", "https://www.linkedin.com/in/abdelhalim-mahmoud/", R.drawable.abdel_halim, R.drawable.linked));
-        ourTeamArrayList.add(new OurTeam( "Ahmed Sedky", "Android Team", "2018030021", "https://www.facebook.com/ahmed.sedky.9", R.drawable.sedky, R.drawable.facebook));
-        ourTeamArrayList.add(new OurTeam( "AbdelRhman Saeed", "Android Team", "2018030211", "http://www.linkedin.com/in/abdelrahman-saeed-bab9841a2", R.drawable.saeed, R.drawable.linked));
-        ourTeamArrayList.add(new OurTeam( "Tarik Atef", "Android Team", "2018030064", "https://www.facebook.com/mazika.is.here", R.drawable.tarek, R.drawable.facebook));
-
-
-        Context context = root.getContext();
-        recyclerView = (RecyclerView) root.findViewById(R.id.our_team_recycler_view);
-        if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-        }
-
-        final OurTeamRecyclerAdapter ourTeamRecyclerAdapter = new OurTeamRecyclerAdapter(R.layout.our_team_item, ourTeamArrayList);
-
-        recyclerView.setAdapter(ourTeamRecyclerAdapter);
-
-
-    }*/
 
 }
